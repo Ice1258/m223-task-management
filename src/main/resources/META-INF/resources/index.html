@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aufgabenverwaltung</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<!-- ===== Login / Registrierung ===== -->
+<section id="auth-view" class="auth" hidden>
+    <div class="auth-card">
+        <h1 class="brand">✓ Aufgabenverwaltung</h1>
+        <div class="tabs" role="tablist">
+            <button class="tab active" data-mode="login" type="button">Anmelden</button>
+            <button class="tab" data-mode="register" type="button">Registrieren</button>
+        </div>
+        <form id="auth-form" novalidate>
+            <label>Benutzername
+                <input name="username" autocomplete="username" required minlength="3">
+            </label>
+            <label>Passwort
+                <input name="password" type="password" autocomplete="current-password" required minlength="6">
+            </label>
+            <p id="auth-error" class="form-error" hidden></p>
+            <button class="btn primary full" type="submit" id="auth-submit">Anmelden</button>
+        </form>
+        <p class="hint">Testbenutzer siehe README.</p>
+    </div>
+</section>
+
+<!-- ===== Hauptansicht ===== -->
+<div id="app-view" class="app" hidden>
+    <header class="topbar">
+        <span class="brand">✓ Aufgabenverwaltung</span>
+        <div class="user">
+            <span id="user-name"></span>
+            <span id="user-role" class="badge"></span>
+            <button id="logout" class="btn ghost small" type="button">Abmelden</button>
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <nav>
+            <h2>Projekte</h2>
+            <ul id="project-list" class="nav-list"></ul>
+            <form id="project-form" class="inline-form">
+                <input name="name" placeholder="Neues Projekt" maxlength="255" required>
+                <button class="btn small" type="submit" title="Projekt hinzufügen">+</button>
+            </form>
+
+            <h2>Labels</h2>
+            <ul id="label-list" class="nav-list"></ul>
+            <form id="label-form" class="inline-form">
+                <input name="color" type="color" value="#1f6feb" title="Farbe">
+                <input name="name" placeholder="Neues Label" maxlength="50" required>
+                <button class="btn small" type="submit" title="Label hinzufügen">+</button>
+            </form>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <div class="toolbar">
+            <div>
+                <h1 id="list-title">Alle Aufgaben</h1>
+                <p id="list-summary" class="muted"></p>
+            </div>
+            <div class="toolbar-actions">
+                <div class="segmented" id="status-filter">
+                    <button type="button" data-status="" class="active">Alle</button>
+                    <button type="button" data-status="offen">Offen</button>
+                    <button type="button" data-status="erledigt">Erledigt</button>
+                </div>
+                <button id="new-task" class="btn primary" type="button">+ Neue Aufgabe</button>
+            </div>
+        </div>
+        <ul id="task-list" class="task-list"></ul>
+        <p id="empty" class="empty" hidden>Keine Aufgaben gefunden.</p>
+    </main>
+</div>
+
+<!-- ===== Dialog: Aufgabe erstellen / bearbeiten ===== -->
+<dialog id="task-dialog">
+    <form id="task-form" method="dialog" novalidate>
+        <h2 id="task-dialog-title">Neue Aufgabe</h2>
+        <label>Titel *
+            <input name="title" required maxlength="255">
+        </label>
+        <label>Beschreibung
+            <textarea name="description" rows="3" maxlength="1000"></textarea>
+        </label>
+        <div class="row">
+            <label>Status
+                <select name="status">
+                    <option value="offen">Offen</option>
+                    <option value="erledigt">Erledigt</option>
+                </select>
+            </label>
+            <label>Fällig am
+                <input name="dueDate" type="date">
+            </label>
+        </div>
+        <label>Projekt
+            <select name="projectId"></select>
+        </label>
+        <fieldset>
+            <legend>Labels</legend>
+            <div id="task-labels" class="label-picker"></div>
+        </fieldset>
+        <p id="task-error" class="form-error" hidden></p>
+        <div class="dialog-actions">
+            <button class="btn ghost" type="button" id="task-cancel">Abbrechen</button>
+            <button class="btn primary" type="submit">Speichern</button>
+        </div>
+    </form>
+</dialog>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
