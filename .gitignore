@@ -43,3 +43,9 @@ nb-configuration.xml
 /.quarkus/cli/plugins/
 # TLS Certificates
 .certs/
+
+# Private Key fuer JWT-Signatur (nie committen)
+/src/main/resources/privateKey.pem
+
+# Lokale H2-Datenbank
+/data/
